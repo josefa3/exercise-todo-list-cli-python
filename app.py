@@ -13,26 +13,28 @@ def add_one_task(title):
 
 def print_list():
     global todos
-    for count in range(0, len(todos),1):
-        count = count + 1
-    print (f'''{count}. {todos}''')
+    for c, value in enumerate(todos, 1):
+       print(c, value)
 
 def delete_task(number_to_delete):
-    todos.pop(int(number_to_delete)-1)
+    todos.pop(int(number_to_delete)-1) # restamos 1 para poder tener el mismo indice de la matriz
 
-def save_todos():
-    with open('todos.csv', 'w', newline='\n') as csvfile: 
+def save_todos(): # con esta función se crea el tipo de archivo, no el directorio, y se escribe en él el list
+    with open('todos.csv', 'w', newline='\n') as csvfile: # csvfile puede tener cualquier nombre, suelen usar f
         writer = csv.writer(csvfile) 
         writer.writerow(todos)
     
-def load_todos():
+def load_todos(): # esta función permite leer el contenido del archivo creado, se debe hacer un for para recorrer los row
+    global todos
     # your code here
     with open('todos.csv', newline='\n') as csvfile: 
         reader = csv.reader(csvfile) 
+        list.clear(todos)
         for row in reader:
-            print(' ' .join(row))
+            print(f'\n'.join(row)) # \n está agregando un salto de línea tras cada iteración de un row.
+            # otra manera de hacerlo es usando *. Ejemplo: print(*row) 
             todos.append(row)
-
+            
 # Below this code will only run if the entry file running was app.py
 if __name__ == '__main__':
     while stop == False:
